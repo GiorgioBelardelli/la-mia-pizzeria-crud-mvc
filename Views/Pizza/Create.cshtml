@@ -1,10 +1,49 @@
 ﻿@using la_mia_pizzeria_static.Data;
 @model Pizza
 
+@{
+    Layout = "_PizzeriaLayout";
+    ViewData["Title"] = "Crea nuova pizza";
+}
+
 <div>
-    <!--Inserire Form-->
-    <form asp-controller="Pizza" asp-action="Create" method="post">
-        @Html.AntiForrgeryToken();
-        <input type="submit" value="Aggiungi" />
-    </form>
+    <div class="wrapper">
+        <div class="form-container">
+            <form asp-controller="Pizza" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <label for="inputNome">Inserisci il nome:</label>
+                    <br />
+                    <input asp-for="Nome" class="create-input" id="inputNome"/>
+                    <br />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="InputDescrizione">Inserisci gli ingredienti:</label>
+                    <br />
+                    <input asp-for="Descrizione" class="create-input" id="inputDescrizione"/>
+                    <br />
+                    <span asp-validation-for="Descrizione" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="inputFotoPath">Inserisci la foto:</label>
+                    <br />
+                    <input asp-for="FotoPath" class="create-input" id="inputFotoPath"/>
+                    <br />
+                    <span asp-validation-for="FotoPath" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="inputPrezzo">Inserisci un prezzo:</label>
+                    <br />
+                    <input asp-for="Prezzo" class="create-input" id="inputPrezzo" />
+                    <br />
+                    <span asp-validation-for="Prezzo" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="submit" class="submit-button" value="Salva">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

@@ -29,6 +29,10 @@ namespace la_mia_pizzeria_static.Controllers
 
         }
 
+        public IActionResult Create()
+        {
+            return View("Create");        
+        }
 
         //Action che fornisce la view con la form per creare una pizza
         [HttpPost]
