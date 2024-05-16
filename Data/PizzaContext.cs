@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using la_mia_pizzeria_static.Models;
 
-namespace la_mia_pizzeria_static.Models
+namespace la_mia_pizzeria_static.Data
 {
     public class PizzeriaContext : DbContext
     {

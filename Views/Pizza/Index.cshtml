@@ -13,7 +13,9 @@
                         <div class="card mx-5" style="width: 300px; height: 350px;">
                             <a href="#">
                                 <div class="card-top" style="border-bottom: 1px solid gray;">
+                                    <a href="@Url.Action("Show", "Pizza", new{ id = pizza.Id})">
                                     <img src="@pizza.FotoPath" alt="Foto Pizza" style="max-width: 200px; height: 150px;" />    
+                                    </a>
                                 </div>
                             </a>
                             <div class="card-bot">
@@ -26,6 +28,10 @@
                             </div>
                         </div>
                     }
+
+                    <a href="@Url.Action("Create", "Pizza", Pizza)">
+                        Aggiungi una nuova pizza
+                    </a>
                 </div>
     </div>
    

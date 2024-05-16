@@ -1,0 +1,10 @@
+﻿@using la_mia_pizzeria_static.Data;
+@model Pizza
+
+<div>
+    <!--Inserire Form-->
+    <form asp-controller="Pizza" asp-action="Create" method="post">
+        @Html.AntiForrgeryToken();
+        <input type="submit" value="Aggiungi" />
+    </form>
+</div>
