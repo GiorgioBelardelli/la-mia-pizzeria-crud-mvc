@@ -26,7 +26,14 @@
                                 <h5 class="d-inline" style="font-weight: 500">Prezzo: </h5>
                                 <span class="card-text">@pizza.Prezzo €</span>
                             </div>
+                            <a href="@Url.Action("Update", "Pizza", new{ id = pizza.Id})">
+                                Modifica
+                            </a>
                         </div>
+                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Elimina" />
+                        </form>
                     }
 
                     <a href="@Url.Action("Create", "Pizza")">

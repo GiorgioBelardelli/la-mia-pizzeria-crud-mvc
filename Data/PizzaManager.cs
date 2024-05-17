@@ -30,5 +30,44 @@ namespace la_mia_pizzeria_static.Data
             db.Pizze.Add(pizza);
             db.SaveChanges();
         }
+
+        public static bool ModificaPizza(long id, string nome, string descrizione, string fotopath, float prezzo) 
+        {
+            using PizzeriaContext db = new PizzeriaContext();
+            var pizza = db.Pizze.FirstOrDefault(p => p.Id == id);
+
+            if (pizza == null) 
+            {
+                return false;
+
+            }
+
+            pizza.Nome = nome;
+            pizza.Descrizione = descrizione;
+            pizza.FotoPath = fotopath;
+            pizza.Prezzo = prezzo;
+            db.SaveChanges();
+
+            return true;
+        }
+
+        public static bool EliminaPizza(long id)
+        {
+            using PizzeriaContext db = new PizzeriaContext();
+            var pizzaDaEliminare =  db.Pizze.FirstOrDefault(p => p.Id == id);
+
+            if (pizzaDaEliminare == null)
+            {
+                return false;
+            }
+            else 
+            {
+                db.Pizze.Remove(pizzaDaEliminare);
+                db.SaveChanges();
+                return true;
+            }
+
+
+        }
     }
 }

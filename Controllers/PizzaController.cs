@@ -48,6 +48,58 @@ namespace la_mia_pizzeria_static.Controllers
 
         }
 
+        //Action che fornisce la view con la form per modificare una pizza
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var pizzaDaModificare = PizzaManager.GetPizza(id);
+            if (pizzaDaModificare == null)
+            {
+                return NotFound();
+            }
+            else 
+            {
+                return View(pizzaDaModificare);
+            
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Pizza pizza)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", pizza);
+            }
+
+
+            if(PizzaManager.ModificaPizza(id, pizza.Nome, pizza.Descrizione, pizza.FotoPath, pizza.Prezzo))
+            {
+                return RedirectToAction("Index");
+            }
+            else 
+            {
+                return NotFound();
+            }
+
+        }
+
+        //Action per eliminare una pizza
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if (PizzaManager.EliminaPizza(id))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
 
         //private List<Pizza> AggiungiPizze()
         //{

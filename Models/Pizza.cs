@@ -12,7 +12,6 @@ namespace la_mia_pizzeria_static.Models
         
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(30, ErrorMessage = "Massimo 30 caratteri")]
-        [MinLength(3)]
 
         public string Nome { get; set; }
 
