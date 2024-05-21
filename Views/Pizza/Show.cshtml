@@ -10,4 +10,8 @@
 <p>@Model.Descrizione</p>
 <strong>Prezzo: </strong>
 <span>@Model.Prezzo </span>
-<span> Categoria:  </span>
+<span> Categoria: @($"{Model.GetCategoria()}") </span>
+
+<div class="row">
+    <div class="col"><a href="@Url.Action("Index", "Pizza")">BACK</a></div>
+</div>

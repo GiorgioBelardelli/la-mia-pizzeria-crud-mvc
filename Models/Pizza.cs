@@ -9,7 +9,7 @@ namespace la_mia_pizzeria_static.Models
     {
         [Key]
         public long Id { get; set; }
-        
+
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(30, ErrorMessage = "Massimo 30 caratteri")]
 
@@ -40,6 +40,15 @@ namespace la_mia_pizzeria_static.Models
             Descrizione = descrizione;
             FotoPath = fotopath;
             Prezzo = prezzo;
+        }
+
+        public string GetCategoria()
+        {
+            if (Categoria == null)
+            { 
+            return Categoria.Titolo;
+            } 
+            return "Nessuna categoria";
         }
     }
 
