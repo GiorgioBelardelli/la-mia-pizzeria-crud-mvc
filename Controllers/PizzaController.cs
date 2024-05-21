@@ -29,21 +29,27 @@ namespace la_mia_pizzeria_static.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
-            return View("Create");        
+            PizzaFormModel model = new PizzaFormModel();   
+            model.Pizza = new Pizza();
+            model.Categorie = PizzaManager.GetAllCategorie();
+            return View(model);        
         }
 
         //Action che fornisce la view con la form per creare una pizza
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza pizza)
+        public IActionResult Create(PizzaFormModel data)
         {
             if (!ModelState.IsValid) 
             {
-                return View("Create", pizza);
+                List<Categoria> categorie = PizzaManager.GetAllCategorie();
+                data.Categorie = categorie;
+                return View("Create", data);
             }
-            PizzaManager.AggiungiPizza(pizza);
+            PizzaManager.AggiungiPizza(data.Pizza);
             return RedirectToAction("Index");
 
         }
@@ -59,22 +65,27 @@ namespace la_mia_pizzeria_static.Controllers
             }
             else 
             {
-                return View(pizzaDaModificare);
+                PizzaFormModel model = new PizzaFormModel();
+                model.Pizza = pizzaDaModificare;
+                model.Categorie = PizzaManager.GetAllCategorie();
+                return View(model);
             
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza pizza)
+        public IActionResult Update(int id, PizzaFormModel data)
         {
             if (!ModelState.IsValid)
             {
-                return View("Update", pizza);
+                List<Categoria> categorie = PizzaManager.GetAllCategorie();
+                data.Categorie = categorie;
+                return View("Update", data);
             }
 
 
-            if(PizzaManager.ModificaPizza(id, pizza.Nome, pizza.Descrizione, pizza.FotoPath, pizza.Prezzo))
+            if(PizzaManager.ModificaPizza(id, data.Pizza.Nome, data.Pizza.Descrizione, data.Pizza.FotoPath, data.Pizza.Prezzo, data.Pizza.CategoriaId))
             {
                 return RedirectToAction("Index");
             }

@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace la_mia_pizzeria_static.Models
 {
-    [Table("pizzas")]
+    [Table("Pizzas")]
     public class Pizza
     {
         [Key]
@@ -26,6 +26,10 @@ namespace la_mia_pizzeria_static.Models
         [Required(ErrorMessage = "Campo obbligatorio")]
         [Range(0.01, 999.99, ErrorMessage = "Il prezzo deve essere compreso tra 0,01 e 999,99.")]
         public float Prezzo { get; set; }
+
+        //Relazione
+        public int? CategoriaId { get; set; }
+        public Categoria? Categoria { get; set; }
 
         public Pizza() { }
 

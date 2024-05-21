@@ -31,7 +31,7 @@ namespace la_mia_pizzeria_static.Data
             db.SaveChanges();
         }
 
-        public static bool ModificaPizza(long id, string nome, string descrizione, string fotopath, float prezzo) 
+        public static bool ModificaPizza(long id, string nome, string descrizione, string fotopath, float prezzo, int? categoriaid) 
         {
             using PizzeriaContext db = new PizzeriaContext();
             var pizza = db.Pizze.FirstOrDefault(p => p.Id == id);
@@ -46,6 +46,8 @@ namespace la_mia_pizzeria_static.Data
             pizza.Descrizione = descrizione;
             pizza.FotoPath = fotopath;
             pizza.Prezzo = prezzo;
+            pizza.CategoriaId = categoriaid;
+
             db.SaveChanges();
 
             return true;
@@ -68,6 +70,12 @@ namespace la_mia_pizzeria_static.Data
             }
 
 
+        }
+
+        public static List<Categoria> GetAllCategorie()
+        {
+            using PizzeriaContext db = new PizzeriaContext();
+            return db.Categorie.ToList();
         }
     }
 }
