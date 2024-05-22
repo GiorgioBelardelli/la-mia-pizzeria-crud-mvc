@@ -27,9 +27,12 @@ namespace la_mia_pizzeria_static.Models
         [Range(0.01, 999.99, ErrorMessage = "Il prezzo deve essere compreso tra 0,01 e 999,99.")]
         public float Prezzo { get; set; }
 
-        //Relazione
+        //Relazione categoria
         public int? CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
+
+        //Relazione ingredienti
+        public List<Ingredienti>? Ingredienti { get; set; }
 
         public Pizza() { }
 
@@ -46,9 +49,9 @@ namespace la_mia_pizzeria_static.Models
         {
             if (Categoria == null)
             { 
-            return Categoria.Titolo;
-            } 
             return "Nessuna categoria";
+            } 
+            return Categoria.Titolo;
         }
     }
 

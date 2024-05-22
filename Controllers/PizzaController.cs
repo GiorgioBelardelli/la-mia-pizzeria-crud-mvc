@@ -24,8 +24,20 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Show(int id)
         {
 
-            var pizza = PizzaManager.GetPizza(id); 
-            return View(pizza);
+            try
+            {
+                var pizza = PizzaManager.GetPizza(id);
+                if (pizza != null)
+                    return View(pizza);
+                else
+                    return NotFound();
+                    //return View("Errore", new ErroreViewModel($"La pizza {id} non è stata trovata!"));
+            }
+            catch (Exception e)
+            {
+                //return View("Errore", new ErroreViewModel(e.Message));
+                return BadRequest(e.Message);
+            }
 
         }
 
@@ -35,6 +47,8 @@ namespace la_mia_pizzeria_static.Controllers
             PizzaFormModel model = new PizzaFormModel();   
             model.Pizza = new Pizza();
             model.Categorie = PizzaManager.GetAllCategorie();
+            model.CreaIngredienti();
+           
             return View(model);        
         }
 
@@ -47,18 +61,22 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 List<Categoria> categorie = PizzaManager.GetAllCategorie();
                 data.Categorie = categorie;
+                data.CreaIngredienti();
                 return View("Create", data);
             }
-            PizzaManager.AggiungiPizza(data.Pizza);
+            PizzaManager.AggiungiPizza(data.Pizza, data.IngredientiSelezionati);
             return RedirectToAction("Index");
 
         }
+
+        
 
         //Action che fornisce la view con la form per modificare una pizza
         [HttpGet]
         public IActionResult Update(int id)
         {
             var pizzaDaModificare = PizzaManager.GetPizza(id);
+
             if (pizzaDaModificare == null)
             {
                 return NotFound();
@@ -68,6 +86,9 @@ namespace la_mia_pizzeria_static.Controllers
                 PizzaFormModel model = new PizzaFormModel();
                 model.Pizza = pizzaDaModificare;
                 model.Categorie = PizzaManager.GetAllCategorie();
+                model.CreaIngredienti();
+
+
                 return View(model);
             
             }
@@ -79,13 +100,13 @@ namespace la_mia_pizzeria_static.Controllers
         {
             if (!ModelState.IsValid)
             {
-                List<Categoria> categorie = PizzaManager.GetAllCategorie();
-                data.Categorie = categorie;
+                data.Categorie = PizzaManager.GetAllCategorie();
+                data.CreaIngredienti();
                 return View("Update", data);
             }
 
 
-            if(PizzaManager.ModificaPizza(id, data.Pizza.Nome, data.Pizza.Descrizione, data.Pizza.FotoPath, data.Pizza.Prezzo, data.Pizza.CategoriaId))
+            if(PizzaManager.ModificaPizza(id, data.Pizza.Nome, data.Pizza.Descrizione, data.Pizza.FotoPath, data.Pizza.Prezzo, data.Pizza.CategoriaId, data.IngredientiSelezionati))
             {
                 return RedirectToAction("Index");
             }
