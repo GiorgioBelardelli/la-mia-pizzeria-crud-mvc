@@ -6,6 +6,8 @@
     ViewData["Title"] = "Crea nuova pizza";
 }
 
+@if (User.IsInRole("ADMIN"))
+{
 <div>
     <div class="wrapper">
         <div class="form-container">
@@ -72,4 +74,9 @@
             </form>
         </div>
     </div>
-</div>
+    </div>
+}
+else
+{
+    <p>WRONG NEIGHBORHOOD DAWG</p>    
+}

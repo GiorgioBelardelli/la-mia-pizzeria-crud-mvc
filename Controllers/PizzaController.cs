@@ -1,11 +1,13 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
+        [Authorize(Roles = "ADMIN,USER")]
         public IActionResult Index()
         {
                 //List<Pizza> pizze = AggiungiPizze();
@@ -21,6 +23,7 @@ namespace la_mia_pizzeria_static.Controllers
                 return View("Index", pizze);
         }
 
+        [Authorize(Roles = "ADMIN,USER")]
         public IActionResult Show(int id)
         {
 
@@ -42,6 +45,7 @@ namespace la_mia_pizzeria_static.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create()
         {
             PizzaFormModel model = new PizzaFormModel();   
@@ -55,6 +59,7 @@ namespace la_mia_pizzeria_static.Controllers
         //Action che fornisce la view con la form per creare una pizza
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create(PizzaFormModel data)
         {
             if (!ModelState.IsValid) 
@@ -73,6 +78,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         //Action che fornisce la view con la form per modificare una pizza
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Update(int id)
         {
             var pizzaDaModificare = PizzaManager.GetPizza(id);
@@ -96,6 +102,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Update(int id, PizzaFormModel data)
         {
             if (!ModelState.IsValid)
@@ -120,6 +127,7 @@ namespace la_mia_pizzeria_static.Controllers
         //Action per eliminare una pizza
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Delete(int id)
         {
             if (PizzaManager.EliminaPizza(id))
